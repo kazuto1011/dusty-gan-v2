@@ -1,0 +1,196 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>cndk.beforeafter.js: Image Comparsion Slider Examples</title>
+
+  <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.3.1/minty/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script> -->
+
+  <!-- cndk.beforeafter.js -->
+  <link href="cndk.beforeafter.css" rel="stylesheet">
+  <script src="cndk.beforeafter.js"></script>
+  <script>
+    $(document).ready(function () {
+      $(".beforeafterdefault").cndkbeforeafter();
+      $(".beforeafterdrag").cndkbeforeafter(
+        {
+          mode: "drag",
+          beforeTextPosition: "top-left"
+        }
+      );
+      $(".beforeafterhidetext").cndkbeforeafter(
+        {
+          showText: false
+        }
+      );
+      $(".beforeafterimageseperator").cndkbeforeafter(
+        {
+          seperatorColor: "#ffffff",
+          seperatorWidth: "10px",
+        }
+      );
+      $(".beforeafterautoslide").cndkbeforeafter(
+        {
+          autoSliding: true
+        }
+      );
+      $(".beforeafterthemedark").cndkbeforeafter(
+        {
+          mode: "drag",
+          theme: "dark"
+        }
+      );
+
+    });
+  </script>
+</head>
+
+<body>
+  <div class="container">
+
+    <div class="row" style="margin-top: 50px;">
+      <div class="col-md-12">
+        <h1 class="display-4">Basic Example</h1>
+        <p>With default settings.</p>
+        <code>
+                    $(".beforeafterdefault").cndkbeforeafter();
+                </code>
+        <div class="card" style="margin-top: 50px;">
+          <div class="beforeafterdefault">
+            <div data-type="data-type-image">
+              <div data-type="before"><img src="https://source.unsplash.com/Uy1P7uztd0M/1200x630"></div>
+              <div data-type="after"><img src="https://source.unsplash.com/Cy1tY6A8Cbk/1200x630"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" style="margin-top: 50px;">
+    <div class="col-md-12">
+      <h1 class="display-4">Compare with drag and touch events</h1>
+      <code>
+                      $(".beforeafterdrag").cndkbeforeafter(
+                        {
+                            mode: "drag", beforeTextPosition: "top-left"
+                        }
+                      );
+                  </code>
+      <div class="card" style="margin-top: 50px;">
+        <div class="beforeafterdrag">
+          <div data-type="data-type-image">
+            <div data-type="before"><img src="https://source.unsplash.com/Uy1P7uztd0M/1200x630"></div>
+            <div data-type="after"><img src="https://source.unsplash.com/Cy1tY6A8Cbk/1200x630"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" style="margin-top: 50px;">
+    <div class="col-md-12">
+      <h1 class="display-4">Dark Theme</h1>
+      <code>
+                      $(".beforeafterdrag").cndkbeforeafter(
+                        {
+                            theme: "dark"
+                        }
+                      );
+                  </code>
+      <div class="card" style="margin-top: 50px;">
+        <div class="beforeafterthemedark">
+          <div data-type="data-type-image">
+            <div data-type="before"><img src="https://source.unsplash.com/Uy1P7uztd0M/1200x630"></div>
+            <div data-type="after"><img src="https://source.unsplash.com/Cy1tY6A8Cbk/1200x630"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" style="margin-top: 50px;">
+    <div class="col-md-12">
+      <h1 class="display-4">Custom Width Of Slider</h1>
+      <code>
+                    $(".beforeafterdrag").cndkbeforeafter( { seperatorWidth: "15px"} );
+                  </code>
+      <div class="card" style="margin-top: 50px;">
+        <div class="beforeafterimageseperator">
+          <div data-type="data-type-image">
+            <div data-type="before"><img src="https://source.unsplash.com/Uy1P7uztd0M/1200x630"></div>
+            <div data-type="after"><img src="https://source.unsplash.com/Cy1tY6A8Cbk/1200x630"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" style="margin-top: 50px;">
+    <div class="col-md-12">
+      <h1 class="display-4">Hide Before/After Text</h1>
+      <code>
+                      $(".beforeafterdrag").cndkbeforeafter( { showText: false } );
+                  </code>
+      <div class="card" style="margin-top: 50px;">
+        <div class="beforeafterhidetext">
+          <div data-type="data-type-image">
+            <div data-type="before"><img src="https://source.unsplash.com/Uy1P7uztd0M/1200x630"></div>
+            <div data-type="after"><img src="https://source.unsplash.com/Cy1tY6A8Cbk/1200x630"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" style="margin-top: 50px;">
+    <div class="col-md-12">
+      <h1 class="display-4">Auto Sliding</h1>
+      <p>With default settings.</p>
+      <code>
+                      $(".beforeafterdrag").cndkbeforeafter( { autoSliding: true } );
+                  </code>
+      <div class="card" style="margin-top: 50px;">
+        <div class="beforeafterautoslide">
+          <div data-type="data-type-image">
+            <div data-type="before"><img src="https://source.unsplash.com/Uy1P7uztd0M/1200x630"></div>
+            <div data-type="after"><img src="https://source.unsplash.com/Cy1tY6A8Cbk/1200x630"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" style="margin-top: 50px;">
+    <div class="col-md-12">
+      <h1 class="display-4">Custom Before/After</h1>
+      <p>With default settings.</p>
+      <code>
+                    data-title="Green Screen"<br>
+                    data-title="At Movie"
+                  </code>
+      <div class="card" style="margin-top: 50px;">
+        <div class="beforeafterdefault">
+          <div data-type="data-type-image">
+            <div data-type="before" data-title="jQuery"><img src="https://source.unsplash.com/Uy1P7uztd0M/1200x630">
+            </div>
+            <div data-type="after" data-title="Script"><img src="https://source.unsplash.com/Cy1tY6A8Cbk/1200x630">
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  </div>
+</body>
+
+</html>

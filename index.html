@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Generative Range Imaging for Learning Scene Priors of 3D LiDAR Data (WACV 2023)</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+        integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+    <link rel="stylesheet" href="touch-image-comparison-slider/cndk.beforeafter.css">
+    <script src="touch-image-comparison-slider/cndk.beforeafter.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/cndk.beforeafter.css">
+    <link rel="stylesheet" type="text/css" href="css/panorama.css">
+
+    <script>
+        $(document).ready(function () {
+            $(".beforeafterdefault").cndkbeforeafter();
+            $(".beforeafterautoslide").cndkbeforeafter(
+                {
+                    autoSliding: true,
+                    hoverEffect: false,
+                    theme: "dark",
+                    seperatorWidth: "0px",
+                }
+            );
+        });
+    </script>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-79606002-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'UA-79606002-1');
+    </script>
+</head>
+
+<body>
+    <div class="container header">
+        <h5><a href="../dusty-gan" target="_blank" rel="noopener">DUSty (2021)</a> / DUSty v2 (2023)</h5>
+    </div>
+
+    <div class="container header">
+        <h1 class="title">Generative Range Imaging for Learning Scene Priors of 3D LiDAR Data</h1>
+        <h5 class="authors">
+            <a href="https://kazuto1011.github.io/" target="_blank" rel="noopener">
+                Kazuto Nakashima</a><sup>1</sup>
+            &nbsp;&nbsp;&nbsp;
+            <a href="http://robotics.ait.kyushu-u.ac.jp/~yumi" target="_blank" rel="noopener">
+                Yumi Iwashita</a><sup>2</sup>
+            &nbsp;&nbsp;&nbsp;
+            <a href="https://robotics.ait.kyushu-u.ac.jp/kurazume/en/" target="_blank" rel="noopener">
+                Ryo Kurazume</a><sup>1</sup>
+        </h5>
+        <h5 class="affiliations">
+            <sup>1</sup>Kyushu University
+            &nbsp;&nbsp;&nbsp;
+            <sup>2</sup>Jet Propulsion Labratory, Caltech
+        </h5>
+        <h5 class="conference">
+            WACV 2023
+        </h5>
+        <div class="materials">
+            <a href="http://arxiv.org/abs/2210.11750" target="_blank" rel="noopener"><i
+                    class="fa-solid fa-file-pdf"></i></a>
+            &nbsp;&nbsp;&nbsp;
+            <a href="https://github.com/kazuto1011/dusty-gan-v2" target="_blank" rel="noopener"><i
+                    class="fa-brands fa-github"></i></a>
+        </div>
+    </div>
+
+
+    <div class="container content">
+        <figure>
+            <img src="img/kitti.gif"
+                style="width: 512; aspect-ratio: 512/64; object-fit: cover; object-position: center 100%;" alt="">
+            <figcaption>
+                Training data from KITTI
+            </figcaption>
+        </figure>
+        <div style="margin: 0 0 0.2rem 0; text-align: center;">
+            <div class="arrow-bottom"></div>
+        </div>
+        <figure>
+            <img src="img/interpolation.gif"
+                style="width: 512; aspect-ratio: 512/64; object-fit: cover; object-position: center 100%;" alt="">
+            <figcaption>
+                Sampling from our learned priors
+            </figcaption>
+        </figure>
+        <div class="beforeafterautoslide">
+            <div data-type="data-type-image">
+                <div data-type="before" data-title="Complete depth">
+                    <img src="img/interpolation.gif"
+                        style="width: 512; aspect-ratio: 512/64; object-fit: cover; object-position: center 0%;" alt="">
+                </div>
+                <div data-type="after" data-title="Ray-drop probability">
+                    <img src="img/interpolation.gif"
+                        style="width: 512; aspect-ratio: 512/64; object-fit: cover; object-position: center 50%;"
+                        alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container content">
+        <h2>Abstract</h2>
+        <b>TL;DR: We propose GAN-based resolution-free data priors for LiDAR domain
+            adaptation</b>
+        <p>
+            3D LiDAR sensors are indispensable for the robust vision of autonomous mobile robots. However, deploying
+            LiDAR-based perception algorithms often fails due to a domain gap from the training environment, such as
+            inconsistent angular resolution and missing properties. Existing studies have tackled the issue by
+            learning
+            inter-domain mapping, while the transferability is constrained by the training configuration and the
+            training is susceptible to peculiar lossy noises called ray-drop. To address the issue, this paper
+            proposes
+            a generative model of LiDAR range images applicable to the data-level domain transfer. Motivated by the
+            fact
+            that LiDAR measurement is based on point-by-point range imaging, we train an implicit image
+            representation-based generative adversarial networks along with a differentiable ray-drop effect. We
+            demonstrate the fidelity and diversity of our model in comparison with the point-based and image-based
+            state-of-the-art generative models. We also showcase upsampling and restoration applications.
+            Furthermore,
+            we introduce a Sim2Real application for LiDAR semantic segmentation. We demonstrate that our method is
+            effective as a realistic ray-drop simulator and outperforms state-of-the-art methods.
+        </p>
+    </div>
+
+    <div class="container content">
+        <h2>Reconstruction</h2>
+        <div class="row">
+            <div class="col">
+                <figure>
+                    <img src="img/inversion/inversion_0000004621_ref.png" alt="">
+                    <figcaption>
+                    </figcaption>
+                </figure>
+                <div style="margin: 0 0 0.2rem 0; text-align: center;">
+                    <div class="arrow-bottom"></div>
+                </div>
+                <div class="beforeafterautoslide">
+                    <div data-type="data-type-image">
+                        <div data-type="before" data-title="">
+                            <img src="img/inversion/inversion_0000004621_gen_d_orig.png">
+                        </div>
+                        <div data-type="after" data-title="">
+                            <img src="img/inversion/inversion_0000004621_gen_noise_p.png">
+                        </div>
+                    </div>
+                </div>
+                <figure>
+                    <img src="img/inversion/inversion_0000004621.gif"><br>
+                    <figcaption>
+                    </figcaption>
+                </figure>
+            </div>
+            <div class="col">
+                <figure>
+                    <img src="img/inversion/inversion_0000016085_ref.png" alt="">
+                    <figcaption>
+                    </figcaption>
+                </figure>
+                <div style="margin: 0 0 0.2rem 0; text-align: center;">
+                    <div class="arrow-bottom"></div>
+                </div>
+                <div class="beforeafterautoslide">
+                    <div data-type="data-type-image">
+                        <div data-type="before" data-title="">
+                            <img src="img/inversion/inversion_0000016085_gen_d_orig.png">
+                        </div>
+                        <div data-type="after" data-title="">
+                            <img src="img/inversion/inversion_0000016085_gen_noise_p.png">
+                        </div>
+                    </div>
+                </div>
+                <figure>
+                    <img src="img/inversion/inversion_0000016085.gif"><br>
+                    <figcaption>
+                    </figcaption>
+                </figure>
+            </div>
+        </div>
+    </div>
+
+    <div class="container content">
+        <h2>Restoration</h2>
+        <div class="row">
+            <div class="col" style="text-align: center;">Original</div>
+            <div class="col" style="text-align: center;">Sparse lines</div>
+            <div class="col" style="text-align: center;">Sparse points</div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <img src="img/kitti_raw_0000017000.svg" alt="">
+            </div>
+            <div class="col">
+                <img src="img/kitti_raw_0000017000_sparse_lines.svg" alt="">
+            </div>
+            <div class="col">
+                <img src="img/kitti_raw_0000017000_sparse_points.svg" alt="">
+            </div>
+        </div>
+    </div>
+
+    <div class="container content">
+        <h2>Upsampling</h2>
+        <div class="row">
+            <div class="col" style="text-align: center;">Input</div>
+            <div class="col" style="text-align: center;">1x</div>
+            <div class="col" style="text-align: center;">2x</div>
+            <div class="col" style="text-align: center;">4x</div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <img src="img/kitti_raw_0000016435.svg" alt="">
+            </div>
+        </div>
+    </div>
+
+    <div class="container content">
+        <h2>Sim2Real Semantic Segmentation</h2>
+        <p>
+            <b>Baseline</b>: trained on GTA-LiDAR (simulation data). <b>Ours</b>: trained on GTA-LiDAR + our decoded
+            noises.
+        </p>
+        <div class="row">
+            <div class="col">
+                <figure>
+                    <img
+                        src="https://user-images.githubusercontent.com/9032347/197989500-4343fae8-70f7-4fb1-bbcb-93de73cc6522.gif">
+                    <figcaption>
+                        Input
+                    </figcaption>
+                </figure>
+            </div>
+            <div class="col">
+                <figure>
+                    <img
+                        src="https://user-images.githubusercontent.com/9032347/197989514-e49c579e-ae7d-4ba5-a435-95c63feb7316.gif">
+                    <figcaption>
+                        GT
+                    </figcaption>
+                </figure>
+            </div>
+            <div class="col">
+                <figure>
+                    <img
+                        src="https://user-images.githubusercontent.com/9032347/197989522-6bd297ee-db65-4164-900f-b41d57cb74ca.gif">
+                    <figcaption>
+                        Baseline
+                    </figcaption>
+                </figure>
+            </div>
+            <div class="col">
+                <figure>
+                    <img
+                        src="https://user-images.githubusercontent.com/9032347/197989458-b82bb66f-e046-45d0-a467-de537296cac2.gif">
+                    <figcaption>
+                        Ours
+                    </figcaption>
+                </figure>
+            </div>
+        </div>
+    </div>
+
+    <div class=" container content">
+        More results will be added soon!
+    </div>
+
+    <div class=" container content">
+        <h2>Citation</h2>
+        <pre class="bibtex">
+<code>@inproceedings{nakashima2023generative,
+    author    = {Nakashima, Kazuto and Iwashita, Yumi and Kurazume, Ryo},
+    title     = {Generative Range Imaging for Learning Scene Priors of 3D LiDAR Data},
+    booktitle = {IEEE/CVF Winter Conference on Applications of Computer Vision (WACV)},
+    pages     = {}
+    year      = {2023}
+}</code></pre>
+    </div>
+
+    <div class="container content">
+        <h2>Related Work</h2>
+        <b>Learning to Drop Points for LiDAR Scan Synthesis</b><br>
+        Kazuto Nakashima and Ryo Kurazume<br>
+        IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS), 2021<br>
+        [<a href="../dusty-gan">Project</a>] [<a href="https://arxiv.org/abs/2102.11952">PDF</a>]
+    </div>
+
+    <div class="container content">
+        <h2>Acknowledgments</h2>
+        <p>
+            This work was partially supported by a Grant-in-Aid for JSPS Fellows Grant Number JP19J12159, JSPS
+            KAKENHI
+            Grant Number JP20H00230, and JST Moonshot R&D Grant Number JPMJMS2032.
+        </p>
+    </div>
+</body>
+
+</html>
