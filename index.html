@@ -19,7 +19,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <link rel="stylesheet" type="text/css" href="css/cndk.beforeafter.css">
-    <link rel="stylesheet" type="text/css" href="css/panorama.css">
 
     <script>
         $(document).ready(function () {
@@ -78,11 +77,10 @@
         </div>
     </div>
 
-
     <div class="container content">
         <figure>
             <img src="img/kitti.gif"
-                style="width: 512; aspect-ratio: 512/64; object-fit: cover; object-position: center 100%;" alt="">
+                style="width: 512; aspect-ratio: 512/64; object-fit: cover; object-position: center 100%;">
             <figcaption>
                 Training data from KITTI
             </figcaption>
@@ -92,7 +90,7 @@
         </div>
         <figure>
             <img src="img/interpolation.gif"
-                style="width: 512; aspect-ratio: 512/64; object-fit: cover; object-position: center 100%;" alt="">
+                style="width: 100%; aspect-ratio: 512/64; object-fit: cover; object-position: center 100%;">
             <figcaption>
                 Sampling from our learned priors
             </figcaption>
@@ -101,12 +99,11 @@
             <div data-type="data-type-image">
                 <div data-type="before" data-title="Complete depth">
                     <img src="img/interpolation.gif"
-                        style="width: 512; aspect-ratio: 512/64; object-fit: cover; object-position: center 0%;" alt="">
+                        style="width: 1000px; aspect-ratio: 512/64; object-fit: cover; object-position: center 0%;">
                 </div>
                 <div data-type="after" data-title="Ray-drop probability">
                     <img src="img/interpolation.gif"
-                        style="width: 512; aspect-ratio: 512/64; object-fit: cover; object-position: center 50%;"
-                        alt="">
+                        style="width: 1000px; aspect-ratio: 512/64; object-fit: cover; object-position: center 50%;">
                 </div>
             </div>
         </div>
@@ -138,10 +135,14 @@
 
     <div class="container content">
         <h2>Reconstruction</h2>
+        <p>
+            Reconstruction by the optimization-based GAN inversion <a href="https://arxiv.org/abs/1809.08495">[Roich et
+                al. TOG'22]</a>.
+        </p>
         <div class="row">
             <div class="col">
                 <figure>
-                    <img src="img/inversion/inversion_0000004621_ref.png" alt="">
+                    <img src="img/inversion/inversion_0000004621_ref.png">
                     <figcaption>
                     </figcaption>
                 </figure>
@@ -166,7 +167,7 @@
             </div>
             <div class="col">
                 <figure>
-                    <img src="img/inversion/inversion_0000016085_ref.png" alt="">
+                    <img src="img/inversion/inversion_0000016085_ref.png">
                     <figcaption>
                     </figcaption>
                 </figure>
@@ -194,35 +195,61 @@
 
     <div class="container content">
         <h2>Restoration</h2>
+        <p>
+            Corrupted data can also be restored by exploring learned scene priors.
+        </p>
         <div class="row">
             <div class="col" style="text-align: center;">Original</div>
-            <div class="col" style="text-align: center;">Sparse lines</div>
+            <div class="col" style="text-align: center;">Sparse "rings"</div>
             <div class="col" style="text-align: center;">Sparse points</div>
         </div>
         <div class="row">
             <div class="col">
-                <img src="img/kitti_raw_0000017000.svg" alt="">
+                <img src="img/kitti_raw_0000017000.svg">
             </div>
             <div class="col">
-                <img src="img/kitti_raw_0000017000_sparse_lines.svg" alt="">
+                <img src="img/kitti_raw_0000017000_sparse_lines.svg">
             </div>
             <div class="col">
-                <img src="img/kitti_raw_0000017000_sparse_points.svg" alt="">
+                <img src="img/kitti_raw_0000017000_sparse_points.svg">
             </div>
         </div>
     </div>
 
     <div class="container content">
         <h2>Upsampling</h2>
-        <div class="row">
-            <div class="col" style="text-align: center;">Input</div>
-            <div class="col" style="text-align: center;">1x</div>
-            <div class="col" style="text-align: center;">2x</div>
-            <div class="col" style="text-align: center;">4x</div>
-        </div>
+        <p>
+            The <b>1x</b> result was obtained by reconstruction. The <b>2x</b> and <b>4x</b> results can be obtained
+            just by changing coordinate queries.
+        </p>
         <div class="row">
             <div class="col">
-                <img src="img/kitti_raw_0000016435.svg" alt="">
+                <figure>
+                    <img
+                        src="https://user-images.githubusercontent.com/9032347/198226854-38b0fba4-459f-4d44-ae88-e5bdccef1acc.gif">
+                    <figcaption>Target from KITTI</figcaption>
+                </figure>
+            </div>
+            <div class="col">
+                <figure>
+                    <img
+                        src="https://user-images.githubusercontent.com/9032347/198226734-4cc7687c-8b31-4ef6-b23a-34ac3f6d5c95.gif">
+                    <figcaption>1x</figcaption>
+                </figure>
+            </div>
+            <div class="col">
+                <figure>
+                    <img
+                        src="https://user-images.githubusercontent.com/9032347/198226790-cd595dec-9daa-4ecc-9a8d-83654fd88c2d.gif">
+                    <figcaption>2x</figcaption>
+                </figure>
+            </div>
+            <div class="col">
+                <figure>
+                    <img
+                        src="https://user-images.githubusercontent.com/9032347/198226816-21c115cb-0aab-4491-92a9-4231f9c1ff22.gif">
+                    <figcaption>4x</figcaption>
+                </figure>
             </div>
         </div>
     </div>
@@ -230,51 +257,43 @@
     <div class="container content">
         <h2>Sim2Real Semantic Segmentation</h2>
         <p>
-            <b>Baseline</b>: trained on GTA-LiDAR (simulation data). <b>Ours</b>: trained on GTA-LiDAR + our decoded
-            noises.
+            Our model can be used as a ray-drop noise simulator!<br>
+            We conducted the semantic segmentation on KITTI annotated with <b style="color: blue;">car</b> and
+            <b style="color: red;">pedestrian</b> classes <a href="https://arxiv.org/abs/1809.08495">[Wu et al.
+                ICRA'19]</a>.<br>
+            <b>Baseline</b> was trained on GTA-LiDAR only (in-game simulation w/o noise). <b>Ours</b> was trained on
+            GTA-LiDAR w/ our noises.
         </p>
         <div class="row">
             <div class="col">
                 <figure>
                     <img
-                        src="https://user-images.githubusercontent.com/9032347/197989500-4343fae8-70f7-4fb1-bbcb-93de73cc6522.gif">
-                    <figcaption>
-                        Input
-                    </figcaption>
+                        src="https://user-images.githubusercontent.com/9032347/198207761-178f63b6-1ec8-4c61-881a-cc5265c2e817.gif">
+                    <figcaption>Input</figcaption>
                 </figure>
             </div>
             <div class="col">
                 <figure>
                     <img
-                        src="https://user-images.githubusercontent.com/9032347/197989514-e49c579e-ae7d-4ba5-a435-95c63feb7316.gif">
-                    <figcaption>
-                        GT
-                    </figcaption>
+                        src="https://user-images.githubusercontent.com/9032347/198207754-e7b8c971-856e-4e56-982d-520b0fb732c4.gif">
+                    <figcaption>GT</figcaption>
                 </figure>
             </div>
             <div class="col">
                 <figure>
                     <img
-                        src="https://user-images.githubusercontent.com/9032347/197989522-6bd297ee-db65-4164-900f-b41d57cb74ca.gif">
-                    <figcaption>
-                        Baseline
-                    </figcaption>
+                        src="https://user-images.githubusercontent.com/9032347/198207716-710d8ced-54b8-44d5-9ed5-9d9a2ca87587.gif">
+                    <figcaption>Baseline</figcaption>
                 </figure>
             </div>
             <div class="col">
                 <figure>
                     <img
-                        src="https://user-images.githubusercontent.com/9032347/197989458-b82bb66f-e046-45d0-a467-de537296cac2.gif">
-                    <figcaption>
-                        Ours
-                    </figcaption>
+                        src="https://user-images.githubusercontent.com/9032347/198207765-fce22492-660c-446a-8e75-7f34e8cb57f0.gif">
+                    <figcaption>Ours</figcaption>
                 </figure>
             </div>
         </div>
-    </div>
-
-    <div class=" container content">
-        More results will be added soon!
     </div>
 
     <div class=" container content">

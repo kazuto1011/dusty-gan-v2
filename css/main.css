@@ -4,7 +4,6 @@ body {
     text-align: justify;
 }
 
-
 img {
     /* max-width: 100%; */
     /* max-height: 100%; */
@@ -31,7 +30,7 @@ a:hover {
 }
 
 .container {
-    max-width: 800px;
+    max-width: 1000px;
 }
 
 .header {
