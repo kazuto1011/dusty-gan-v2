@@ -1,0 +1,98 @@
+dataset:
+  name: kitti_raw
+  root: data/kitti_raw
+  min_depth: 1.45
+  max_depth: 80
+  flip: false
+  train: train
+  val: val
+  test: test
+  raydrop_const: -1
+training:
+  random_seed: 0
+  pin_memory: true
+  total_kimg: 25000
+  ema_kimg: 10
+  ema_rampup: 0.05
+  batch_size: 32
+  checkpoint:
+    validation: 10000
+    save_model: 10000
+    save_image: 5000
+    save_stats: 1000
+  gan_objective: nsgan
+  loss:
+    gan: 1
+    gp: 1
+    pl: 0
+  lazy:
+    gp: 16
+    pl: 4
+    ada: 4
+  lr:
+    generator:
+      alpha: 0.002
+      beta1: 0
+      beta2: 0.99
+    discriminator:
+      alpha: 0.002
+      beta1: 0
+      beta2: 0.99
+  augment:
+    p_init: 0.0
+    p_target: 0.6
+    kimg: 500
+    policy:
+      lr_flip: 1
+      ud_flip: 1
+      int_trans: 1
+      iso_scale: 1
+      frac_trans: 1
+      brightness: 1
+      contrast: 1
+      luma_flip: 1
+      hue: 1
+      saturation: 1
+      imgfilter: 0
+      noise: 0
+      cutout: 0
+  warmup:
+    fade_kimg: 200
+    blur_init_sigma: 0
+    dropout_init_ratio: 0.5
+  amp:
+    main: false
+    reg: false
+validation:
+  batch_size: 32
+  num_points: 2048
+random_seed: 0
+model:
+  generator:
+    mapping_kwargs:
+      in_ch: 512
+      out_ch: 512
+    synthesis_kwargs:
+      in_ch: 512
+      out_ch:
+        - name: image
+          ch: 1
+          act: null
+      ch_base: 64
+      ch_max: 512
+      resolution:
+        - 64
+        - 512
+      ring: true
+    measurement_kwargs: {}
+    arch: vanilla
+  discriminator:
+    layer_kwargs:
+      in_ch: 1
+      ring: true
+      ch_base: 64
+      ch_max: 512
+      resolution:
+        - 64
+        - 512
+    arch: vanilla

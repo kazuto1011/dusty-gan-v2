@@ -1,0 +1,33 @@
+name: dusty-gan-v2
+channels:
+  - conda-forge
+  - pytorch
+  - nvidia
+dependencies:
+  - conda-forge::compilers
+  - conda-forge::numba
+  - conda-forge::opencv
+  - conda-forge::pip
+  - conda-forge::python=3.10
+  - conda-forge::imageio
+  - pytorch::pytorch=1.13
+  - pytorch::pytorch-cuda=11.7
+  - pytorch::torchvision
+  - pip:
+      - black
+      - einops
+      - ipython
+      - joblib
+      - kornia
+      - matplotlib
+      - mypy
+      - ninja
+      - omegaconf
+      - rich
+      - seaborn
+      - streamlit
+      - tensorboard
+      - tqdm
+      - imageio-ffmpeg
+      - polyscope
+      - scipy
