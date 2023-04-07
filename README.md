@@ -5,7 +5,7 @@
 **Generative Range Imaging for Learning Scene Priors of 3D LiDAR Data**<br>
 [<u>Kazuto Nakashima</u>](https://kazuto1011.github.io/), Yumi Iwashita, Ryo Kurazume<br>
 IEEE/CVF Winter Conference on Applications of Computer Vision (WACV) 2023<br>
-[project](https://kazuto1011.github.io/dusty-gan-v2) | [paper]() | [supplementary]() | [arxiv](http://arxiv.org/abs/2210.11750) | [slide](https://kazuto1011.github.io/docs/slides/nakashima2023generative_teaser.pdf)
+[project](https://kazuto1011.github.io/dusty-gan-v2) | [paper](https://openaccess.thecvf.com/content/WACV2023/papers/Nakashima_Generative_Range_Imaging_for_Learning_Scene_Priors_of_3D_LiDAR_WACV_2023_paper.pdf) | [supplemental](https://openaccess.thecvf.com/content/WACV2023/supplemental/Nakashima_Generative_Range_Imaging_WACV_2023_supplemental.pdf) | [arxiv](http://arxiv.org/abs/2210.11750) | [slide](https://kazuto1011.github.io/docs/slides/nakashima2023generative_teaser.pdf)
 
 </center>
 
