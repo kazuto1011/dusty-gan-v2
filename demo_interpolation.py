@@ -14,7 +14,7 @@ from gans.coords import CoordBridge
 from gans.models.builder import build_generator
 from gans.models.ops import GumbelSigmoid
 from gans.pretrained import autoload_ckpt
-from gans.utils import colorize, cycle, init_random_seed, save_video, tanh_to_sigmoid
+from gans.utils import colorize, cycle, init_random_seed, tanh_to_sigmoid
 
 
 def visualize_2d(G, coord, args, steps, interp_fn):
@@ -33,18 +33,11 @@ def visualize_2d(G, coord, args, steps, interp_fn):
         grid = colorize(grid)
         return grid[0].cpu().numpy().transpose(1, 2, 0)
 
-    # print('press "q" to quit')
-    # while True:
-    #     cv2.imshow("image", generate()[..., ::-1])
-    #     if cv2.waitKey(10) == ord("q"):
-    #         break
-
-    from tqdm import tqdm
-
-    frames = []
-    for _ in tqdm(range(num_frames)):
-        frames.append(np.uint8(generate() * 255))
-    save_video(frames, f"demo_interpolation2d", fps=60)
+    print('press "q" to quit')
+    while True:
+        cv2.imshow("image", generate()[..., ::-1])
+        if cv2.waitKey(10) == ord("q"):
+            break
 
 
 def visualize_3d(G, coord, args, steps, interp_fn):
