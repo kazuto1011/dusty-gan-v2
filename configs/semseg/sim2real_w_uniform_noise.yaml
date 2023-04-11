@@ -1,0 +1,47 @@
+arch:
+  name: squeezeseg_v2
+  inputs:
+    - xyz
+    - depth
+  bn_momentum: 0.001
+  encoder:
+    dropout_p: 0.5
+  decoder:
+    dropout_p: 0.5
+  use_crf: true
+  crf:
+    kernel_size: [3, 5]
+    init_weight_smoothness: 0.02
+    init_weight_appearance: 0.1
+    theta_gamma: [0.9, 0.9, 0.6]
+    theta_alpha: [0.9, 0.9, 0.6]
+    theta_beta: [0.015, 0.015, 0.01]
+    num_iters: 3
+dataset:
+  name: gta_lidar_w_uniform_noise
+  num_classes: 3
+  logit_bias: [0.01, 0.33, 0.33]
+  scan_unfolding: true
+  shape: [64, 512]
+  random_flip: true
+loss:
+  name: focal_loss
+  focal_gamma: 2
+  cls_loss_coef: 15.0
+  cls_weight: [0.33, 1.0, 3.5]
+training:
+  max_steps: 50000
+  lr: 0.05
+  lr_momentum: 0.9
+  lr_decay: 0.5
+  lr_decay_steps: 10000
+  weight_decay: 0.0001
+  max_grad_norm: 1.0
+  batch_size: 40
+  checkpoint:
+    test: 1000
+    stats: 500
+    image: 500
+random_seed: 0
+channels_last: false
+use_amp: true

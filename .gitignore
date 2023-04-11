@@ -130,6 +130,7 @@ dmypy.json
 
 logs/
 data/kitti_raw
+data/kitti_raw_frontal
 .polyscope.ini
 imgui.ini
 *.mp4

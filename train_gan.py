@@ -193,7 +193,7 @@ if __name__ == "__main__":
     # set up logging
     cfg.training.resume = args.resume
     if args.resume is None:
-        log_dir = Path("logs")
+        log_dir = Path("logs/gans")
         log_dir /= f"{cfg.dataset.name:s}"
         log_dir /= f"{cfg.model.generator.arch:s}+{cfg.model.discriminator.arch:s}"
         log_dir /= datetime.datetime.now().strftime("%Y%m%dT%H%M%S")

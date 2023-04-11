@@ -9,9 +9,9 @@ IEEE/CVF Winter Conference on Applications of Computer Vision (WACV) 2023<br>
 
 </center>
 
-We propose GAN-based LiDAR data priors for sim2real and restoration tasks. Extended version of our previous work [DUSty [Nakashima et al. IROS'21]](https://kazuto1011.github.io/dusty-gan).
+We propose GAN-based LiDAR data priors for sim2real and restoration tasks, which is an extension of our previous work, [DUSty [Nakashima et al. IROS'21]](https://kazuto1011.github.io/dusty-gan).
 
-The core idea is to represent LiDAR range images as a continuous image generative model (or 2D neural fields), which generates a range value and the corresponding dropout probability from a laser radiation angle. The generative process is trained by the GAN framework. Please check out our [paper](https://openaccess.thecvf.com/content/WACV2023/papers/Nakashima_Generative_Range_Imaging_for_Learning_Scene_Priors_of_3D_LiDAR_WACV_2023_paper.pdf) and [supplementary materials](https://openaccess.thecvf.com/content/WACV2023/supplemental/Nakashima_Generative_Range_Imaging_WACV_2023_supplemental.pdf) for more details on the architecture.
+The core idea is to represent LiDAR range images as a continuous-image generative model or 2D neural fields. This model generates a range value and the corresponding dropout probability from a laser radiation angle. The generative process is trained using a GAN framework. For more details on the architecture, please refer to our [paper](https://openaccess.thecvf.com/content/WACV2023/papers/Nakashima_Generative_Range_Imaging_for_Learning_Scene_Priors_of_3D_LiDAR_WACV_2023_paper.pdf) and [supplementary materials](https://openaccess.thecvf.com/content/WACV2023/supplemental/Nakashima_Generative_Range_Imaging_WACV_2023_supplemental.pdf).
 
 ![arch](https://user-images.githubusercontent.com/9032347/230577070-526852c6-35c6-42fa-b1bf-5f96e0ea2897.png)
 
@@ -19,7 +19,7 @@ The core idea is to represent LiDAR range images as a continuous image generativ
 
 ### Python environment + CUDA
 
-The environment can be built by Anaconda. This command installs CUDA 11.X runtime, while we require the PyTorch JIT compillation for `gans/` dirs. Please also install the matching CUDA locally.
+The environment can be built using Anaconda. This command installs the CUDA 11.X runtime, however, we require PyTorch JIT compilation for the `gans/` directory. Please also install the corresponding CUDA locally.
 
 ```sh
 $ conda env create -f environment.yaml
@@ -44,7 +44,7 @@ The `--arch` option can also be set to our baselines: `vanilla` and `dusty_v1`.
 To train models by your own or run the other demos, please download the [KITTI Raw]() dataset and make a symbolic link.
 
 ```sh
-$ ln -sf <a path to the kitti raw root> ./data/kitti_raw
+$ ln -sf <path to kitti raw root> ./data/kitti_raw
 $ ls ./data/kitti_raw
 2011_09_26  2011_09_28  2011_09_29  2011_09_30  2011_10_03
 ```
@@ -75,11 +75,8 @@ $ tensorboard --logdir ./logs
 
 ## Evaluation
 
-For convinience, let `$CKPT_PATH` be a path to the `checkpoint_*.pth` file hereafter.
-`$CKPT_PATH` can also be the pretrained model IDs: `dusty_v2`, `dusty_v1`, or `vanilla`.
-
 ```sh
-$ python test_gan.py --ckpt_path $CKPT_PATH --metrics swd,jsd,1nna,fpd,kpd
+$ python test_gan.py --ckpt_path <path to *.pth file> --metrics swd,jsd,1nna,fpd,kpd
 ```
 
 |options|modality|metrics|
@@ -90,12 +87,14 @@ $ python test_gan.py --ckpt_path $CKPT_PATH --metrics swd,jsd,1nna,fpd,kpd
 |`fpd`|PointNet features|Fréchet pointcloud distance (FPD)|
 |`kpd`|PointNet features|Squared maximum mean discrepancy (like KID in the image domain)|
 
+Note: `--ckpt_path` can also be the following keywords: `dusty_v2`, `dusty_v1`, or `vanilla`. In this case, the pre-trained weights are automatically downloaded.
+
 ## Demo
 
 ### Latent interpolation
 
 ```sh
-$ python demo_interpolation.py --mode 2d --ckpt_path $CKPT_PATH
+$ python demo_interpolation.py --mode 2d --ckpt_path <path to *.pth file>
 ```
 
 `--mode 2d`
@@ -109,14 +108,85 @@ https://user-images.githubusercontent.com/9032347/230582262-2d900d8e-f701-4191-a
 ### GAN inversion
 
 ```sh
-$ python demo_inversion.py --ckpt_path $CKPT_PATH
+$ python demo_inversion.py --ckpt_path <path to *.pth file>
 ```
 
 https://user-images.githubusercontent.com/9032347/230580669-6c650b01-0e31-4a5c-9274-ac739731b247.mp4
 
-## Sim2Real domain adaptation
+## Sim2Real semantic segmentation
 
-This part is still on refactoring.
+The `semseg/` directory includes an implementation of Sim2Real semantic segmentation. The basic setup is to train the SqueezeSegV2 model [Wu et al. ICRA'19] on GTA-LiDAR (simulation) and test it on KITTI (real). To mitigate the domain gap, our paper proposed reproducing the ray-drop noises onto the simulation data using our learned GAN. For details, please refer to our [paper (Section 4.2)](https://openaccess.thecvf.com/content/WACV2023/papers/Nakashima_Generative_Range_Imaging_for_Learning_Scene_Priors_of_3D_LiDAR_WACV_2023_paper.pdf).
+
+### Dataset
+
+1. Please setup GTA-LiDAR (simulation) and KITTI (real) datasets provided by the [SqueezeSegV2 repository](https://github.com/xuanyuzhou98/SqueezeSegV2).
+
+```yaml
+├── GTAV  # GTA-LiDAR
+│   ├──1
+│   │  ├── 00000000.npy
+│   │  └── ...
+│   └── ...
+├── ImageSet  # KITTI
+│   ├── all.txt
+│   ├── train.txt
+│   └── val.txt
+└── lidar_2d  # KITTI
+    ├── 2011_09_26_0001_0000000000.npy
+    └── ...
+```
+
+1. Compute the raydrop probability map (64x512 shape) for each GTA-LiDAR depth map (`*.npy`) using the GAN inversion, and save them with the same structure. *We will also release the pre-computed data.*
+
+```yaml
+data/kitti_raw_frontal
+├── GTAV
+│   ├──1
+│   │  ├── 00000000.npy
+│   │  └── ...
+│   └── ...
+├── GTAV_noise_v1  # computed with DUSty v1
+│   ├──1
+│   │  ├── 00000000.npy
+│   │  └── ...
+│   └── ...
+├── GTAV_noise_v2  # computed with DUSty v2
+│   ├──1
+│   │  ├── 00000000.npy
+│   │  └── ...
+│   └── ...
+```
+
+3. Finally, please make a symbolic link.
+
+```sh
+$ ln -sf <a path to the root above> ./data/kitti_raw_frontal
+```
+
+### Training
+
+Training configuration files can be found in `configs/semseg/`. We compare five approaches (config-A-E) to reproduce the raydrop noises.
+
+```sh
+$ python train_semseg.py --config <path to *.yaml file>
+```
+
+|config|training domain|raydrop probability|file|
+|:-|:-|:-|:-|
+| A |Simulation||`configs/semseg/sim2real_wo_noise.yaml`             |
+| B |Simulation|Global frequency|`configs/semseg/sim2real_w_uniform_noise.yaml`      |
+| C |Simulation|Pixel-wise frequency|`configs/semseg/sim2real_w_spatial_noise.yaml`      |
+| D |Simulation|Computed w/ DUSty v1|`configs/semseg/sim2real_w_gan_noise_dustyv1.yaml`  |
+| E |Simulation|Computed w/ DUSty v2|`configs/semseg/sim2real_w_gan_noise_dustyv2.yaml`  |
+| F |Real|N/A|`configs/semseg/real2real.yaml`                     |
+
+Note: `--ckpt_path` can also be the following keywords: `clean`, `uniform`, `spatial`, `dusty_v1`, `dusty_v2`, or `real`. In this case, the pre-trained weights are automatically downloaded.
+
+### Evaluation
+
+```sh
+$ python test_semseg.py --ckpt_path <path to *.pth file>
+```
 
 ## Citation
 
