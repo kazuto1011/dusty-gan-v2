@@ -70,7 +70,7 @@ $ python train_gan.py --config configs/gans/vanilla.yaml   # baseline
 To monitor losses and images:
 
 ```sh
-$ tensorboard --logdir ./logs
+$ tensorboard --logdir ./logs/gans
 ```
 
 ## Evaluation
@@ -180,13 +180,19 @@ $ python train_semseg.py --config <path to *.yaml file>
 | E |Simulation|Computed w/ DUSty v2|`configs/semseg/sim2real_w_gan_noise_dustyv2.yaml`  |
 | F |Real|N/A|`configs/semseg/real2real.yaml`                     |
 
-Note: `--ckpt_path` can also be the following keywords: `clean`, `uniform`, `spatial`, `dusty_v1`, `dusty_v2`, or `real`. In this case, the pre-trained weights are automatically downloaded.
+To monitor losses and images:
+
+```sh
+$ tensorboard --logdir ./logs/semseg
+```
 
 ### Evaluation
 
 ```sh
 $ python test_semseg.py --ckpt_path <path to *.pth file>
 ```
+
+Note: `--ckpt_path` can also be the following keywords: `clean`, `uniform`, `spatial`, `dusty_v1`, `dusty_v2`, or `real`. In this case, the pre-trained weights are automatically downloaded.
 
 ## Citation
 
