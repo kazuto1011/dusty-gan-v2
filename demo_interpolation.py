@@ -56,10 +56,8 @@ def visualize_3d(G, coord, args, steps, interp_fn):
     z = None
     psi = args.truncation_psi
 
-    counter = 0
-
     def render():
-        nonlocal z, psi, in_updating, counter
+        nonlocal z, psi, in_updating
 
         # GUIs
         psim.PushItemWidth(150)
@@ -94,12 +92,6 @@ def visualize_3d(G, coord, args, steps, interp_fn):
         else:
             ps.get_point_cloud("lidar").update_point_positions(points)
         ps.get_point_cloud("lidar").add_color_quantity("n", colors, enabled=True)
-        ps.screenshot(
-            filename=f"vid/demo_interpolation_{counter:05d}.png", transparent_bg=False
-        )
-        counter += 1
-        if counter == num_frames:
-            quit()
 
     ps.set_user_callback(render)
     ps.show()
