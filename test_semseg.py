@@ -116,8 +116,6 @@ if __name__ == "__main__":
     # evaluation
     conf_matrix = defaultdict(int)
     for item in tqdm(val_loader, desc="validation"):
-        # raw_depth = item_raw["depth"].to(device, non_blocking=True).float()
-        # item = val_dataset.normalize(item_raw)
         xyz = item["xyz"].to(device, non_blocking=True).float()
         depth = item["depth"].to(device, non_blocking=True).float()
         label = item["label"].to(device, non_blocking=True).long()

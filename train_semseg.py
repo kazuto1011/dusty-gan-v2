@@ -220,7 +220,6 @@ def training_loop(rank, cfg, temp_dir, log_dir):
 
         # fixed batch for visualization
         item = next(iter(val_loader))
-        item = val_dataset.normalize(item)
         inputs_vis = make_inputs(item, cfg.arch.inputs).to(**to_kwargs)
         depth_vis = item["depth"].to(**to_kwargs)
         xyz_vis = item["xyz"].to(**to_kwargs)
@@ -248,7 +247,6 @@ def training_loop(rank, cfg, temp_dir, log_dir):
         disable=not rank == 0,
     ):
         item = next(iter_train_loader)
-        item = train_dataset.normalize(item)
         model.train()
 
         # fetch data
@@ -327,7 +325,6 @@ def training_loop(rank, cfg, temp_dir, log_dir):
                 model.eval()
                 confusion_matrix_val = defaultdict(int)
                 for item in tqdm(val_loader, desc="validation", leave=False):
-                    item = val_dataset.normalize(item)
                     xyz = item["xyz"].to(**to_kwargs)
                     label = item["label"].to(**to_kwargs)
                     mask = item["mask"].to(**to_kwargs)
