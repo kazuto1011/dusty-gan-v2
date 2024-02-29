@@ -99,11 +99,11 @@ $ python demo_interpolation.py --mode 2d --ckpt_path <path to *.pth file>
 
 `--mode 2d`
 
-https://user-images.githubusercontent.com/9032347/230571979-2fe94796-2df0-4e6e-9f11-f1c1d941a85d.mp4
+https://github.com/kazuto1011/dusty-gan-v2/assets/9032347/8d4acfc2-35d2-45c2-ab4b-b93bfbc0edc9
 
 `--mode 3d`
 
-https://user-images.githubusercontent.com/9032347/230582262-2d900d8e-f701-4191-a534-1439aa07e8d7.mp4
+[https://user-images.githubusercontent.com/9032347/230582262-2d900d8e-f701-4191-a534-1439aa07e8d7.mp4](https://github.com/kazuto1011/dusty-gan-v2/assets/9032347/f052bf9f-f5f2-4044-b30c-7564a16b6f82)
 
 ### GAN inversion
 
@@ -111,7 +111,7 @@ https://user-images.githubusercontent.com/9032347/230582262-2d900d8e-f701-4191-a
 $ python demo_inversion.py --ckpt_path <path to *.pth file>
 ```
 
-https://user-images.githubusercontent.com/9032347/230580669-6c650b01-0e31-4a5c-9274-ac739731b247.mp4
+[https://user-images.githubusercontent.com/9032347/230580669-6c650b01-0e31-4a5c-9274-ac739731b247.mp4](https://github.com/kazuto1011/dusty-gan-v2/assets/9032347/239e8f47-e629-4c0d-9c0e-839be91f2793)
 
 ## Sim2Real semantic segmentation
 
